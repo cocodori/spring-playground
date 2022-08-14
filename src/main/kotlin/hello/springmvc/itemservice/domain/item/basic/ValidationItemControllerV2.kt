@@ -23,7 +23,50 @@ class ValidationItemControllerV2(
 
     private val log = LoggerFactory.getLogger(javaClass)
 
+
     @PostMapping("/add")
+    fun addItemV4(
+        @ModelAttribute item: Item,
+        bindingResult: BindingResult,
+        redirectAttributes: RedirectAttributes,
+    ): String {
+        log.info("objectName={}", bindingResult.objectName)
+        log.info("target={}", bindingResult.target)
+
+        if (item.itemName.isNullOrBlank()) {
+            bindingResult.rejectValue("itemName", "required")
+        }
+
+        if (item.price == null || item.price < 1000 || item.price > 1000000) {
+            bindingResult.rejectValue("price", "range", arrayOf(1000, 1000000), null)
+        }
+
+        if (item.quantity == null || item.quantity > 10000) {
+            bindingResult.rejectValue("quantity", "max", arrayOf(9999), null)
+        }
+
+        if (item.price != null && item.quantity != null) {
+            val resultPrice = item.price * item.quantity
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", arrayOf(10000, resultPrice), null)
+            }
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult)
+            return "validation/v2/addForm"
+        }
+
+        val savedItem = itemRepository.save(item)
+        redirectAttributes.addAttribute("itemId", savedItem.id)
+        redirectAttributes.addAttribute("status", true)
+
+        return "redirect:/validation/v2/items/{itemId}"
+    }
+
+
+
+//    @PostMapping("/add")
     fun addItemV3(
         @ModelAttribute item: Item,
         bindingResult: BindingResult,
