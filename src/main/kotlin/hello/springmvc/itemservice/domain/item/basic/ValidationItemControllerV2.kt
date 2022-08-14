@@ -2,6 +2,7 @@ package hello.springmvc.itemservice.domain.item.basic
 
 import hello.springmvc.itemservice.domain.item.Item
 import hello.springmvc.itemservice.domain.item.ItemRepository
+import hello.springmvc.itemservice.web.validation.ItemValidator
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -18,13 +19,35 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 @RequestMapping("/basic/items/v2")
 @Controller
 class ValidationItemControllerV2(
-    private val itemRepository: ItemRepository
+    private val itemValidator: ItemValidator,
+    private val itemRepository: ItemRepository,
 ) {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
 
-    @PostMapping("/add")
+    @PostMapping("add")
+    fun addItemV5(
+        @ModelAttribute item: Item,
+        bindingResult: BindingResult,
+        redirectAttributes: RedirectAttributes,
+    ): String {
+        itemValidator.validate(item, bindingResult)
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult)
+
+            return "validation/v2/addForm"
+        }
+
+        val savedItem = itemRepository.save(item)
+        redirectAttributes.addAttribute("itemId", savedItem.id)
+        redirectAttributes.addAttribute("status", true)
+
+        return "redirect:/validation/v2/items/{itemId}"
+    }
+
+//    @PostMapping("/add")
     fun addItemV4(
         @ModelAttribute item: Item,
         bindingResult: BindingResult,
