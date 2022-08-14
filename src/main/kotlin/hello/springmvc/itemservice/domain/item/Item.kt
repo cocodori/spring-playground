@@ -1,7 +1,7 @@
 package hello.springmvc.itemservice.domain.item
 
 class Item private constructor(
-    var id: Long,
+    var id: Long = -1,
     var itemName: String,
     var price: Int,
     var quantity: Int,
