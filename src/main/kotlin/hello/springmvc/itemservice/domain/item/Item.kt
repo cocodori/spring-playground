@@ -1,9 +1,23 @@
 package hello.springmvc.itemservice.domain.item
 
+import org.hibernate.validator.constraints.Range
+import javax.validation.constraints.Max
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import kotlin.math.max
+
 class Item private constructor(
     var id: Long = -1,
+
+    @field:NotBlank
     var itemName: String,
+
+    @field:NotNull
+    @field:Range(min = 100, max = 1000000)
     var price: Int,
+
+    @field:NotNull
+    @field:Max(9999)
     var quantity: Int,
 ) {
 
