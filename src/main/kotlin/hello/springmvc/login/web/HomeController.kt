@@ -17,6 +17,22 @@ class HomeController(
 ) {
 
     @GetMapping("/")
+    fun homeLoginV3(
+        request: HttpServletRequest,
+        model: Model,
+    ): String {
+        val session = request.getSession(false)
+        session ?: return "home"
+
+        val loginMember = session.getAttribute(SessionConst.LOGIN_MEMBER) as Member?
+            ?: return "home"
+
+        model["member"] = loginMember
+
+        return "loginHome"
+    }
+
+//    @GetMapping("/")
     fun homeLoginV2(
         request: HttpServletRequest,
         model: Model

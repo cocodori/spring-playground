@@ -1,6 +1,7 @@
 package hello.springmvc.login.web.login
 
 import hello.springmvc.login.domain.LoginService
+import hello.springmvc.login.web.SessionConst
 import hello.springmvc.login.web.session.SessionManager
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
@@ -28,7 +29,36 @@ class LoginController(
         return "login/loginForm"
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
+    fun loginV3(
+        @Valid @ModelAttribute form: LoginForm,
+        bindingResult: BindingResult,
+        request: HttpServletRequest
+    ): String {
+        if (bindingResult.hasErrors())
+            return "login/loginForm"
+
+        val loginMember = loginService.login(form.loginId!!, form.password!!)
+        log.info("login? {}", loginMember)
+
+        if (loginMember == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.")
+            return "login/loginForm"
+        }
+
+        val session = request.session
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember)
+
+        return "redirect:/"
+    }
+
+    @PostMapping("/logout")
+    fun logoutV3(request: HttpServletRequest): String {
+        request.getSession(false)?.invalidate()
+        return "redirect:/"
+    }
+
+//    @PostMapping("login")
     fun loginV2(
         @Valid @ModelAttribute form: LoginForm,
         bindingResult: BindingResult,
@@ -52,7 +82,7 @@ class LoginController(
         return "redirect:/"
     }
 
-    @PostMapping("/logout")
+//    @PostMapping("/logout")
     fun logoutV2(
         request: HttpServletRequest
     ): String {
