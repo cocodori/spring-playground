@@ -8,6 +8,7 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.SessionAttribute
 import javax.servlet.http.HttpServletRequest
 
 @Controller
@@ -16,7 +17,19 @@ class HomeController(
     private val sessionManager: SessionManager,
 ) {
 
-    @GetMapping("/")
+    @GetMapping
+    fun homeLoginV3Spring(
+        @SessionAttribute(name = "loginMember", required = false) loginMember: Member?,
+        model: Model,
+    ): String {
+        loginMember ?: return "home"
+
+        model["member"] = loginMember
+
+        return "loginHome"
+    }
+
+//    @GetMapping
     fun homeLoginV3(
         request: HttpServletRequest,
         model: Model,
