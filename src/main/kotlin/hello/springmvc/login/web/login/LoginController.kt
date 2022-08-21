@@ -9,10 +9,12 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.validation.Valid
+import javax.websocket.Session
 
 @Controller
 class LoginController(
@@ -30,6 +32,30 @@ class LoginController(
     }
 
     @PostMapping("/login")
+    fun loginV4(
+        @Valid @ModelAttribute form: LoginForm,
+        bindingResult: BindingResult,
+        @RequestParam(defaultValue = "/") redirectURL: String,
+        request: HttpServletRequest
+    ): String {
+        if (bindingResult.hasErrors())
+            return "login/loginForm"
+
+        val loginMember = loginService.login(form.loginId!!, form.password!!)
+        log.info("login? {}", loginMember)
+
+        if (loginMember == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.")
+            return "login/loginForm"
+        }
+
+        val session = request.session
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember)
+
+        return "redirect:$redirectURL"
+    }
+
+//    @PostMapping("/login")
     fun loginV3(
         @Valid @ModelAttribute form: LoginForm,
         bindingResult: BindingResult,
