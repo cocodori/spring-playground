@@ -1,15 +1,27 @@
 package hello.springmvc.login.web
 
 import hello.springmvc.login.web.filter.LogFilter
+import hello.springmvc.login.web.interceptor.LogInterceptor
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import javax.servlet.Filter
 
 @Configuration
-class WebConfig {
+class WebConfig: WebMvcConfigurer {
 
-    @Bean
+    override fun addInterceptors(
+        registry: InterceptorRegistry
+    ) {
+        registry.addInterceptor(LogInterceptor())
+            .order(1)
+            .addPathPatterns("/**")
+            .excludePathPatterns("/css/**", "/*.ico", "/error")
+    }
+
+//    @Bean
     fun loginCheckFilter(): FilterRegistrationBean<Filter> {
         val filterRegistrationBean = FilterRegistrationBean<Filter>()
         filterRegistrationBean.filter = LogFilter()
@@ -19,7 +31,7 @@ class WebConfig {
         return filterRegistrationBean
     }
 
-    @Bean
+//    @Bean
     fun logFilter(): FilterRegistrationBean<Filter> {
         val filterRegistrationBean = FilterRegistrationBean<Filter>()
         filterRegistrationBean.filter = LogFilter()
