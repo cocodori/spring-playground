@@ -18,7 +18,7 @@ class HomeController(
     private val sessionManager: SessionManager,
 ) {
 
-    @GetMapping
+//    @GetMapping
     fun homeLoginV3ArgumentResolver(
         @Login loginMember: Member?,
         model: Model
