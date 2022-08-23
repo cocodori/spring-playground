@@ -2,6 +2,7 @@ package hello.springmvc.login.web
 
 import hello.springmvc.login.domain.member.Member
 import hello.springmvc.login.domain.member.MemberRepository
+import hello.springmvc.login.web.argumentresolver.Login
 import hello.springmvc.login.web.session.SessionManager
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -18,6 +19,18 @@ class HomeController(
 ) {
 
     @GetMapping
+    fun homeLoginV3ArgumentResolver(
+        @Login loginMember: Member?,
+        model: Model
+    ): String {
+        if (loginMember == null)
+            return "home"
+
+        model["member"] = loginMember
+        return "loginHome"
+    }
+
+//    @GetMapping
     fun homeLoginV3Spring(
         @SessionAttribute(name = "loginMember", required = false) loginMember: Member?,
         model: Model,

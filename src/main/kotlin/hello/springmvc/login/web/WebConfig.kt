@@ -1,17 +1,25 @@
 package hello.springmvc.login.web
 
+import hello.springmvc.login.web.argumentresolver.LoginMemberArgumentResolver
 import hello.springmvc.login.web.filter.LogFilter
 import hello.springmvc.login.web.interceptor.LogInterceptor
 import hello.springmvc.login.web.interceptor.LoginCheckInterceptor
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import javax.servlet.Filter
 
 @Configuration
 class WebConfig: WebMvcConfigurer {
+
+    override fun addArgumentResolvers(
+        resolvers: MutableList<HandlerMethodArgumentResolver>
+    ) {
+        resolvers.add(LoginMemberArgumentResolver())
+    }
 
     override fun addInterceptors(
         registry: InterceptorRegistry
