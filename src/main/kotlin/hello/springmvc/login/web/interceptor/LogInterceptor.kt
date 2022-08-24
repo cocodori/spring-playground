@@ -25,13 +25,7 @@ class LogInterceptor : HandlerInterceptor {
         val uuid = UUID.randomUUID().toString()
         request.setAttribute(LOG_ID, uuid)
 
-        //@RequestMapping: HandlerMethod
-        //정적 리소스: ResourceHttpRequestHandler
-        if (handler is HandlerMethod) {
-            val handlerMethod = handler // 호출할 컨트롤러 메서드의 모든 정보가 포함되어 있다.
-        }
-
-        log.info("Request [{}][{}][{}]", uuid, requestURI, handler)
+        log.info("Request [{}][{}][{}][{}]", uuid, request.dispatcherType, requestURI, handler)
         return true //false면 진행을 멈추고 컨트롤러까지 가지 않는다.
     }
 
@@ -52,7 +46,7 @@ class LogInterceptor : HandlerInterceptor {
     ) {
         val requestURI = request.requestURI
         val logId = request.getAttribute(LOG_ID)
-        log.info("Response [{}][{}]", logId, requestURI)
+        log.info("Response [{}][{}][{}]", logId, request.dispatcherType, requestURI)
 
         ex?.let {
             log.error("afterCompletion error!!", ex)

@@ -24,12 +24,12 @@ class LogFilter: Filter {
         val uuid = UUID.randomUUID().toString()
 
         try {
-            log.info("REQUEST [{}][{}]", uuid, requestURI)
+            log.info("REQUEST [{}][{}][{}]", uuid, request.dispatcherType, requestURI)
             chain.doFilter(request, response)
         } catch (e: Exception) {
             throw e
         } finally {
-            log.info("RESPONSE [{}][{}]", uuid, requestURI)
+            log.info("RESPONSE [{}][{}][{}]", uuid, request.dispatcherType, requestURI)
         }
     }
 
