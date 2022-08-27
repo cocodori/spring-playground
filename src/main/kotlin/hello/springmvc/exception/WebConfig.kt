@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.HandlerExceptionResolver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
-@Configuration
+//@Configuration
 class WebConfig: WebMvcConfigurer {
 
     override fun extendHandlerExceptionResolvers(resolvers: MutableList<HandlerExceptionResolver>) {
