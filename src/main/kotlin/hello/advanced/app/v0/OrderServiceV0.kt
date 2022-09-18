@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class OrderServiceV0(
-    private val orderRepositoryV0: OrderRepositoryV0
+    private val orderRepositoryV0: OrderRepositoryV1
 ) {
 
     fun orderItem(itemId: String) {
