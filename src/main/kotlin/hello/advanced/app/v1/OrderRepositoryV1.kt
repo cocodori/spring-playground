@@ -1,4 +1,4 @@
-package hello.advanced.app.v0
+package hello.advanced.app.v1
 
 import hello.advanced.trace.hellotrace.HelloTraceV1
 import org.springframework.stereotype.Repository
