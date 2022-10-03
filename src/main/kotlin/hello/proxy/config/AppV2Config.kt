@@ -8,7 +8,7 @@ import hello.proxy.app.v3.OrderServiceV3
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Configuration
+//@Configuration
 class AppV2Config {
 
     @Bean

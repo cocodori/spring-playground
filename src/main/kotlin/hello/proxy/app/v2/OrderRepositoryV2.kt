@@ -1,8 +1,8 @@
 package hello.proxy.app.v2
 
-class OrderRepositoryV2 {
+open class OrderRepositoryV2 {
 
-    fun save(itemId: String) {
+    open fun save(itemId: String) {
         if (itemId == "ex")
             throw IllegalStateException()
 

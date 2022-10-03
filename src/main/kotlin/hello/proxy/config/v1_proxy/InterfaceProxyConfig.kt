@@ -9,7 +9,7 @@ import hello.proxy.config.v1_proxy.interface_proxy.OrderServiceInterfaceProxy
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Configuration
+//@Configuration
 class InterfaceProxyConfig {
 
     @Bean
