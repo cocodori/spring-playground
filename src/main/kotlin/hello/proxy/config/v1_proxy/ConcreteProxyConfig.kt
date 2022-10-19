@@ -11,7 +11,7 @@ import hello.proxy.config.v1_proxy.concrete_proxy.OrderServiceConcreteProxy
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Configuration
+//@Configuration
 class ConcreteProxyConfig {
 
     @Bean
