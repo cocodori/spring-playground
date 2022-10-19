@@ -10,12 +10,12 @@ class LogTraceBasicHandler(
     private val logTrace: LogTrace
 ): InvocationHandler  {
 
-    override fun invoke(proxy: Any?, method: Method, args: Array<out Any>?): Any? {
+    override fun invoke(proxy: Any, method: Method, args: Array<out Any>): Any? {
         val message = "${method.declaringClass.simpleName}.${method.name}()"
         val status = logTrace.begin(message)
 
         try {
-            val result = method.invoke(target, args)
+            val result = method.invoke(target, *args)
 
             logTrace.end(status)
             return result
