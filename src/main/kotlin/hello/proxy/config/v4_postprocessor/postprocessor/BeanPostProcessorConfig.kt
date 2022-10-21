@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 
-@Configuration
-@Import(AppV1Config::class, AppV2Config::class)
+//@Configuration
+//@Import(AppV1Config::class, AppV2Config::class)
 class BeanPostProcessorConfig {
 
     @Bean

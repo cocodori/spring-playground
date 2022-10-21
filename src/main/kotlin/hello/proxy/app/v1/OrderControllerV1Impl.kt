@@ -1,6 +1,6 @@
 package hello.proxy.app.v1
 
-class OrderControllerV1Impl(
+open class OrderControllerV1Impl(
     private val orderService: OrderServiceV1
 ): OrderControllerV1 {
 
