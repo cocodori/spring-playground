@@ -15,7 +15,7 @@ import org.springframework.aop.support.NameMatchMethodPointcut
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Configuration
+//@Configuration
 class ProxyFactoryConfigV2 {
     private val log = LoggerFactory.getLogger(javaClass)
 
