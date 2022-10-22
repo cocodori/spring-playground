@@ -6,7 +6,7 @@ import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import java.lang.Exception
 
-@Aspect
+//@Aspect
 class LogTraceAspect(
     private val logTrace: LogTrace
 ) {

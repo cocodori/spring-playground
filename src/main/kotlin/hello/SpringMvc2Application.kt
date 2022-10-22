@@ -12,9 +12,9 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 
-@Import(AppConfig::class)
+//@Import(AppConfig::class)
 @SpringBootApplication
-@ComponentScan(basePackages = ["hello.proxy.*"])
+@ComponentScan(basePackages = ["hello.aop"])
 class SpringMvc2Application
 
 fun main(args: Array<String>) {
